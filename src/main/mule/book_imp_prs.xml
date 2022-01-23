@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="3a2c571e-50d4-48d7-b1d8-4743781bd6e4" >
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<flow name="book_imp_prsFlow" doc:id="c4544a9f-ca80-4192-a8c7-187b1e6b234d" >
+		<http:request method="GET" doc:name="Request" doc:id="016790cc-d606-4701-8854-cd43cb5bb941" config-ref="HTTP_Request_configuration" path="/api/book">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"Publication" : attributes.queryParams.Publication,
+	"BookID" : attributes.queryParams.BookID
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>
